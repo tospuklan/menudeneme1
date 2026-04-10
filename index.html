@@ -13,10 +13,18 @@
       --muted:         #8a8070;
       --border:        rgba(42,127,127,0.15);
       --border-strong: rgba(42,127,127,0.3);
+      --content-max:   600px;
+      --content-min:   300px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: #1a1a1a; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--cream);
+      color: #1a1a1a;
+      min-width: var(--content-min);
+    }
 
     /* ── DİL SEÇİM EKRANI ── */
     #lang-screen {
@@ -35,43 +43,70 @@
     }
     .lang-btn:hover { background: var(--teal-dark); }
 
-    /* ── MENU WRAPPER ── */
-    .menu-wrapper { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 100px; display: none; }
-    .menu-wrapper.visible { display: block; }
-
-    /* ── APP HEADER ── */
-    .app-header {
+    /* ── FULL WIDTH WRAPPER (header + bg) ── */
+    .full-width-header {
+      position: fixed; top: 0; left: 0; right: 0;
       background: var(--cream);
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      z-index: 20;
+      display: flex; justify-content: center;
+    }
+    .app-header {
+      width: 100%;
+      max-width: var(--content-max);
+      min-width: var(--content-min);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 16px; height: 56px;
-      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
-      width: 100%; max-width: 480px; z-index: 20;
     }
+
     .lang-toggle {
       display: flex; align-items: center; gap: 6px;
       border: 1.5px solid var(--border-strong); border-radius: 8px;
       padding: 6px 10px; cursor: pointer; background: none;
       font-size: 12px; font-weight: 700; color: var(--teal);
       transition: color 0.2s, border-color 0.2s, background 0.2s;
+      white-space: nowrap;
     }
     .lang-toggle:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
 
+    /* ── CONTENT WRAPPER ── */
+    .menu-wrapper {
+      width: 100%;
+      max-width: var(--content-max);
+      min-width: var(--content-min);
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      padding-bottom: 100px;
+      display: none;
+      margin-top: 56px;
+    }
+    .menu-wrapper.visible { display: block; }
+
     /* ── HERO ── */
-    .hero { width: 100%; height: 200px; overflow: hidden; margin-top: 56px; }
+    .hero { width: 100%; height: 200px; overflow: hidden; }
     .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* ── TABS (sabit genişlik, scroll) ── */
-    .tabs-bar {
-      border-bottom: 2px solid var(--cream);
-      background: #fff;
+    /* ── TABS (JS ile genişlik hesaplanıyor) ── */
+    .full-width-tabs {
       position: sticky; top: 56px; z-index: 10;
-      overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      display: flex; justify-content: center;
+      background: #fff;
+      border-bottom: 2px solid var(--cream);
+    }
+    .tabs-bar {
+      width: 100%;
+      max-width: var(--content-max);
+      min-width: var(--content-min);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
     .tabs-bar::-webkit-scrollbar { display: none; }
     .tabs { display: flex; }
     .tab-btn {
-      flex: 0 0 auto; width: 90px;
+      flex: 0 0 auto;
+      /* width JS tarafından set edilir */
       padding: 13px 0; border: none; background: none;
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
       color: var(--muted); cursor: pointer;
@@ -92,7 +127,11 @@
       padding: 16px 0; border-bottom: 1px solid var(--border);
     }
     .menu-item:last-child { border-bottom: none; }
-    .item-img { width: 100px; height: 100px; min-width: 100px; border-radius: 8px; overflow: hidden; background: var(--cream); border: 1px solid var(--border); }
+    .item-img {
+      width: 100px; height: 100px; min-width: 100px;
+      border-radius: 8px; overflow: hidden;
+      background: var(--cream); border: 1px solid var(--border);
+    }
     .item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .item-info { flex: 1; display: flex; flex-direction: column; gap: 5px; padding-top: 2px; }
     .item-name { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
@@ -113,20 +152,17 @@
     .wa-btn:active { transform: translateX(-50%) scale(0.97); }
     .wa-icon { width: 22px; height: 22px; flex-shrink: 0; }
 
-    /* ── RESPONSIVE ── */
+    /* ── 600px üzeri: content sabit, arka plan açılır ── */
     @media (min-width: 600px) {
-      .menu-wrapper { margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+      .menu-wrapper {
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+      }
       .hero { height: 230px; }
       .item-img { width: 120px; height: 120px; min-width: 120px; }
-      .item-name { font-size: 15px; } .item-desc { font-size: 13px; } .item-price { font-size: 15px; }
-    }
-    @media (min-width: 900px) {
-      .menu-wrapper { max-width: 720px; }
-      .app-header { max-width: 720px; }
-      .hero { height: 270px; }
-      .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; padding: 0 24px; }
-      .menu-item { padding: 20px 0; }
-      .menu-item:nth-last-child(-n+2) { border-bottom: none; }
+      .item-name { font-size: 15px; }
+      .item-desc { font-size: 13px; }
+      .item-price { font-size: 15px; }
     }
   </style>
 </head>
@@ -142,10 +178,8 @@
   </div>
 </div>
 
-<!-- MENÜ -->
-<div class="menu-wrapper" id="menu">
-
-  <!-- APP HEADER — logo görseli -->
+<!-- HEADER — full width, content max 600px -->
+<div class="full-width-header" id="main-header" style="display:none;">
   <div class="app-header">
     <img src="logotype.png" alt="Urban Bites" style="height: 24px; width: auto;" />
     <button class="lang-toggle" onclick="toggleLang()">
@@ -153,20 +187,26 @@
       <span id="lang-label">EN</span>
     </button>
   </div>
+</div>
+
+<!-- MENÜ -->
+<div class="menu-wrapper" id="menu">
 
   <div class="hero">
     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=900&q=85" alt="Urban Bites" loading="lazy" />
   </div>
 
-  <!-- TABS -->
-  <div class="tabs-bar">
-    <div class="tabs">
-      <button class="tab-btn active" id="tab-food"    onclick="switchTab('food', this)"    data-tr="Yiyecek"   data-en="Food"></button>
-      <button class="tab-btn"        id="tab-burger"  onclick="switchTab('burger', this)"  data-tr="Burger"    data-en="Burger"></button>
-      <button class="tab-btn"        id="tab-drink"   onclick="switchTab('drink', this)"   data-tr="İçecek"    data-en="Drinks"></button>
-      <button class="tab-btn"        id="tab-soup"    onclick="switchTab('soup', this)"    data-tr="Çorbalar"  data-en="Soups"></button>
-      <button class="tab-btn"        id="tab-dessert" onclick="switchTab('dessert', this)" data-tr="Tatlılar"  data-en="Desserts"></button>
-      <button class="tab-btn"        id="tab-salad"   onclick="switchTab('salad', this)"   data-tr="Salatalar" data-en="Salads"></button>
+  <!-- TABS — full width wrap, content sınırlı -->
+  <div class="full-width-tabs">
+    <div class="tabs-bar" id="tabs-bar">
+      <div class="tabs" id="tabs-container">
+        <button class="tab-btn active" id="tab-food"    onclick="switchTab('food', this)"    data-tr="Yiyecek"   data-en="Food"></button>
+        <button class="tab-btn"        id="tab-burger"  onclick="switchTab('burger', this)"  data-tr="Burger"    data-en="Burger"></button>
+        <button class="tab-btn"        id="tab-drink"   onclick="switchTab('drink', this)"   data-tr="İçecek"    data-en="Drinks"></button>
+        <button class="tab-btn"        id="tab-soup"    onclick="switchTab('soup', this)"    data-tr="Çorbalar"  data-en="Soups"></button>
+        <button class="tab-btn"        id="tab-dessert" onclick="switchTab('dessert', this)" data-tr="Tatlılar"  data-en="Desserts"></button>
+        <button class="tab-btn"        id="tab-salad"   onclick="switchTab('salad', this)"   data-tr="Salatalar" data-en="Salads"></button>
+      </div>
     </div>
   </div>
 
@@ -343,6 +383,50 @@
     en: { order: 'Order Now',   flag: '🇹🇷', label: 'TR' }
   };
 
+  // Tab genişliği hesaplama
+  // En geniş label + 32px padding = min tab genişliği
+  // Görünür alan / tab genişliği = kaç tab sığar
+  // .5'e yuvarla aşağı (3.5, 4.5, 5.5), tab genişliğini buna göre ayarla
+  function calcTabWidth() {
+    var tabs = document.querySelectorAll('.tab-btn');
+    var bar  = document.getElementById('tabs-bar');
+    var containerWidth = Math.min(bar.offsetWidth, 600);
+    containerWidth = Math.max(containerWidth, 300);
+
+    // Canvas ile her tab label'ının px genişliğini ölç
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.font = '700 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+
+    var maxLabelWidth = 0;
+    tabs.forEach(function(btn) {
+      var trLabel = btn.getAttribute('data-tr') || btn.textContent;
+      var enLabel = btn.getAttribute('data-en') || btn.textContent;
+      var trW = ctx.measureText(trLabel.toUpperCase()).width;
+      var enW = ctx.measureText(enLabel.toUpperCase()).width;
+      maxLabelWidth = Math.max(maxLabelWidth, trW, enW);
+    });
+
+    var minTabWidth = Math.ceil(maxLabelWidth) + 32; // 16px padding her iki yandan
+
+    // Kaç tam tab sığar?
+    var fitsFloat = containerWidth / minTabWidth;
+
+    // .5 basamaklarına yuvarla aşağı: 3.5, 4.5, 5.5 ...
+    // Her zaman .5'li olacak: 3.5, 4.5, 5.5 ...
+    // Math.floor ile tam sayıya indir, sonra 0.5 ekle
+    var half = Math.floor(fitsFloat) + 0.5;
+
+    // En az 3.5 olsun
+    if (half < 3.5) half = 3.5;
+
+    var tabWidth = Math.floor(containerWidth / half);
+
+    tabs.forEach(function(btn) {
+      btn.style.width = tabWidth + 'px';
+    });
+  }
+
   function applyLang(lang) {
     currentLang = lang;
     var s = strings[lang];
@@ -353,11 +437,13 @@
       el.textContent = el.getAttribute('data-' + lang);
     });
     document.documentElement.lang = lang;
+    calcTabWidth();
   }
 
   function setLang(lang) {
     document.getElementById('lang-screen').style.display = 'none';
     document.getElementById('menu').classList.add('visible');
+    document.getElementById('main-header').style.display = 'flex';
     document.getElementById('wa-btn').classList.add('visible');
     applyLang(lang);
   }
@@ -373,6 +459,8 @@
     btn.classList.add('active');
     btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
+
+  window.addEventListener('resize', calcTabWidth);
 </script>
 </body>
 </html>
