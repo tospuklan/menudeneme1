@@ -3,44 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Menü</title>
+  <title>Urban Bites</title>
   <style>
+    :root {
+      --cream:         #F2EFE6;
+      --teal:          #2A7F7F;
+      --teal-dark:     #1d5f5f;
+      --red:           #CC3300;
+      --muted:         #8a8070;
+      --border:        rgba(42,127,127,0.15);
+      --border-strong: rgba(42,127,127,0.3);
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; }
-    .menu-wrapper { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 100px; }
-    .hero { width: 100%; height: 200px; overflow: hidden; position: relative; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: #1a1a1a; }
+
+    /* ── DİL SEÇİM EKRANI ── */
+    #lang-screen {
+      position: fixed; inset: 0; background: var(--cream); z-index: 999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    }
+    .lang-logo-img { width: 220px; height: auto; }
+    .lang-subtitle { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+    .lang-buttons { display: flex; flex-direction: column; gap: 12px; width: 240px; }
+    .lang-btn {
+      display: flex; align-items: center; justify-content: center;
+      padding: 14px 0; border-radius: 10px; border: none;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      background: var(--teal); color: #fff;
+      transition: background 0.2s;
+    }
+    .lang-btn:hover { background: var(--teal-dark); }
+
+    /* ── MENU WRAPPER ── */
+    .menu-wrapper { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 100px; display: none; }
+    .menu-wrapper.visible { display: block; }
+
+    /* ── APP HEADER ── */
+    .app-header {
+      background: var(--cream);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; height: 56px;
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 480px; z-index: 20;
+    }
+    .lang-toggle {
+      display: flex; align-items: center; gap: 6px;
+      border: 1.5px solid var(--border-strong); border-radius: 8px;
+      padding: 6px 10px; cursor: pointer; background: none;
+      font-size: 12px; font-weight: 700; color: var(--teal);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .lang-toggle:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+    /* ── HERO ── */
+    .hero { width: 100%; height: 200px; overflow: hidden; margin-top: 56px; }
     .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.35)); }
-    .tabs { display: flex; border-bottom: 1px solid #ebebeb; background: #fff; position: sticky; top: 0; z-index: 10; }
-    .tab-btn { flex: 1; padding: 13px 0; border: none; background: none; font-size: 13px; font-weight: 500; letter-spacing: 0.06em; color: #aaa; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; text-transform: uppercase; }
-    .tab-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+
+    /* ── TABS (sabit genişlik, scroll) ── */
+    .tabs-bar {
+      border-bottom: 2px solid var(--cream);
+      background: #fff;
+      position: sticky; top: 56px; z-index: 10;
+      overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .tabs { display: flex; }
+    .tab-btn {
+      flex: 0 0 auto; width: 90px;
+      padding: 13px 0; border: none; background: none;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--muted); cursor: pointer;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+      text-transform: uppercase; white-space: nowrap; text-align: center;
+    }
+    .tab-btn.active { color: var(--teal); border-bottom-color: var(--red); }
+
+    /* ── PANELS ── */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+
+    /* ── MENU LIST ── */
     .menu-list { padding: 0 16px; }
-    .menu-item { display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #ebebeb; }
+    .menu-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
     .menu-item:last-child { border-bottom: none; }
-    .item-img { width: 100px; height: 100px; min-width: 100px; border-radius: 8px; overflow: hidden; background: #e8e8e8; }
+    .item-img { width: 100px; height: 100px; min-width: 100px; border-radius: 8px; overflow: hidden; background: var(--cream); border: 1px solid var(--border); }
     .item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .item-info { flex: 1; display: flex; flex-direction: column; gap: 5px; padding-top: 2px; }
-    .item-name { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.3; }
-    .item-desc { font-size: 12px; color: #777; line-height: 1.55; }
-    .item-price { font-size: 14px; font-weight: 600; color: #1D9E75; margin-top: 6px; }
-    .wa-btn { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #25D366; color: #fff; border: none; border-radius: 50px; padding: 14px 28px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 10px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.45); white-space: nowrap; z-index: 100; transition: transform 0.15s, box-shadow 0.15s; }
-    .wa-btn:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 6px 24px rgba(37,211,102,0.55); }
+    .item-name { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
+    .item-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .item-price { font-size: 14px; font-weight: 700; color: var(--teal); margin-top: 6px; letter-spacing: 0.03em; }
+
+    /* ── WHATSAPP BUTTON ── */
+    .wa-btn {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #25D366; color: #fff; border: none; border-radius: 50px;
+      padding: 14px 28px; font-size: 15px; font-weight: 700; cursor: pointer;
+      display: none; align-items: center; gap: 10px; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4); white-space: nowrap; z-index: 100;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .wa-btn.visible { display: flex; }
+    .wa-btn:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
     .wa-btn:active { transform: translateX(-50%) scale(0.97); }
     .wa-icon { width: 22px; height: 22px; flex-shrink: 0; }
+
+    /* ── RESPONSIVE ── */
     @media (min-width: 600px) {
-      .menu-wrapper { margin: 24px auto; border-radius: 16px; overflow: hidden; border: 1px solid #e8e8e8; min-height: unset; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
-      .hero { height: 240px; }
+      .menu-wrapper { margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+      .hero { height: 230px; }
       .item-img { width: 120px; height: 120px; min-width: 120px; }
-      .item-name { font-size: 15px; }
-      .item-desc { font-size: 13px; }
-      .item-price { font-size: 15px; }
-      .tabs { position: relative; }
+      .item-name { font-size: 15px; } .item-desc { font-size: 13px; } .item-price { font-size: 15px; }
     }
     @media (min-width: 900px) {
       .menu-wrapper { max-width: 720px; }
-      .hero { height: 280px; }
+      .app-header { max-width: 720px; }
+      .hero { height: 270px; }
       .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; padding: 0 24px; }
       .menu-item { padding: 20px 0; }
       .menu-item:nth-last-child(-n+2) { border-bottom: none; }
@@ -48,89 +131,247 @@
   </style>
 </head>
 <body>
-<div class="menu-wrapper">
+
+<!-- DİL SEÇİM EKRANI -->
+<div id="lang-screen">
+  <img class="lang-logo-img" src="logo.png" alt="Urban Bites" />
+  <div class="lang-subtitle">Lütfen dilinizi seçin · Please select</div>
+  <div class="lang-buttons">
+    <button class="lang-btn" onclick="setLang('tr')">Türkçe</button>
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+  </div>
+</div>
+
+<!-- MENÜ -->
+<div class="menu-wrapper" id="menu">
+
+  <!-- APP HEADER — logo görseli -->
+  <div class="app-header">
+    <img src="logo.png" alt="Urban Bites" style="height: 36px; width: auto;" />
+    <button class="lang-toggle" onclick="toggleLang()">
+      <span id="lang-flag">🇬🇧</span>
+      <span id="lang-label">EN</span>
+    </button>
+  </div>
+
   <div class="hero">
-    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Restoran iç mekan" loading="lazy" />
-    <div class="hero-overlay"></div>
+    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=900&q=85" alt="Urban Bites" loading="lazy" />
   </div>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('yiyecek', this)">🍽 Yiyecek</button>
-    <button class="tab-btn" onclick="switchTab('icecek', this)">🥤 İçecek</button>
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-food"    onclick="switchTab('food', this)"    data-tr="Yiyecek"   data-en="Food"></button>
+      <button class="tab-btn"        id="tab-burger"  onclick="switchTab('burger', this)"  data-tr="Burger"    data-en="Burger"></button>
+      <button class="tab-btn"        id="tab-drink"   onclick="switchTab('drink', this)"   data-tr="İçecek"    data-en="Drinks"></button>
+      <button class="tab-btn"        id="tab-soup"    onclick="switchTab('soup', this)"    data-tr="Çorbalar"  data-en="Soups"></button>
+      <button class="tab-btn"        id="tab-dessert" onclick="switchTab('dessert', this)" data-tr="Tatlılar"  data-en="Desserts"></button>
+      <button class="tab-btn"        id="tab-salad"   onclick="switchTab('salad', this)"   data-tr="Salatalar" data-en="Salads"></button>
+    </div>
   </div>
 
-  <div id="panel-yiyecek" class="tab-panel active">
+  <!-- YİYECEK -->
+  <div id="panel-food" class="tab-panel active">
     <div class="menu-list">
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=300&q=80" alt="Izgara Levrek" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=300&q=80" alt="Levrek" loading="lazy" /></div>
         <div class="item-info">
-          <div class="item-name">Izgara Levrek</div>
-          <div class="item-desc">Taze levrek, zeytinyağı, limon, kekik ve mevsim sebzeleri ile</div>
+          <div class="item-name" data-tr="Izgara Levrek" data-en="Grilled Sea Bass"></div>
+          <div class="item-desc" data-tr="Taze levrek, zeytinyağı, limon, kekik ve mevsim sebzeleri ile" data-en="Fresh sea bass with olive oil, lemon, thyme and seasonal vegetables"></div>
           <div class="item-price">₺320</div>
         </div>
       </div>
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=300&q=80" alt="Kuzu İncik" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=300&q=80" alt="Kuzu" loading="lazy" /></div>
         <div class="item-info">
-          <div class="item-name">Kuzu İncik</div>
-          <div class="item-desc">Fırında pişmiş kuzu incik, patates püresi ve mevsim sebzeleri</div>
+          <div class="item-name" data-tr="Kuzu İncik" data-en="Lamb Shank"></div>
+          <div class="item-desc" data-tr="Fırında pişmiş kuzu incik, patates püresi ve mevsim sebzeleri" data-en="Slow-roasted lamb shank with mashed potatoes and seasonal vegetables"></div>
           <div class="item-price">₺480</div>
         </div>
       </div>
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=300&q=80" alt="Mantarlı Risotto" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=300&q=80" alt="Risotto" loading="lazy" /></div>
         <div class="item-info">
-          <div class="item-name">Mantarlı Risotto</div>
-          <div class="item-desc">Orman mantarları, parmesan, taze kekik ve tereyağı ile</div>
+          <div class="item-name" data-tr="Mantarlı Risotto" data-en="Mushroom Risotto"></div>
+          <div class="item-desc" data-tr="Orman mantarları, parmesan, taze kekik ve tereyağı ile" data-en="Wild mushrooms, parmesan, fresh thyme and butter"></div>
           <div class="item-price">₺260</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="panel-icecek" class="tab-panel">
+  <!-- BURGER -->
+  <div id="panel-burger" class="tab-panel">
     <div class="menu-list">
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=300&q=80" alt="Kola" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80" alt="Classic Burger" loading="lazy" /></div>
         <div class="item-info">
-          <div class="item-name">Kola</div>
-          <div class="item-desc">Soğuk servis, buz ve limon dilimiyle</div>
+          <div class="item-name" data-tr="Klasik Burger" data-en="Classic Burger"></div>
+          <div class="item-desc" data-tr="Dana köfte, cheddar, marul, domates, özel sos" data-en="Beef patty, cheddar, lettuce, tomato, house sauce"></div>
+          <div class="item-price">₺280</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300&q=80" alt="Smoky Burger" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Smoky BBQ Burger" data-en="Smoky BBQ Burger"></div>
+          <div class="item-desc" data-tr="Karamelize soğan, bacon, BBQ sos ve gouda peyniri" data-en="Caramelized onion, bacon, BBQ sauce and gouda cheese"></div>
+          <div class="item-price">₺340</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=300&q=80" alt="Veggie Burger" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Veggie Burger" data-en="Veggie Burger"></div>
+          <div class="item-desc" data-tr="Nohut köfte, avokado, rokoka ve limonlu yoğurt sos" data-en="Chickpea patty, avocado, rocket and lemon yoghurt sauce"></div>
+          <div class="item-price">₺240</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- İÇECEK -->
+  <div id="panel-drink" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=300&q=80" alt="Kola" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Kola" data-en="Cola"></div>
+          <div class="item-desc" data-tr="Soğuk servis, buz ve limon dilimiyle" data-en="Served cold with ice and a slice of lemon"></div>
           <div class="item-price">₺60</div>
         </div>
       </div>
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1624552184280-9e48e8b35f99?w=300&q=80" alt="Fanta" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300&q=80" alt="Fanta" loading="lazy" /></div>
         <div class="item-info">
-          <div class="item-name">Fanta</div>
-          <div class="item-desc">Portakal aromalı, soğuk servis</div>
+          <div class="item-name" data-tr="Fanta" data-en="Fanta"></div>
+          <div class="item-desc" data-tr="Portakal aromalı, soğuk servis" data-en="Orange flavoured, served cold"></div>
           <div class="item-price">₺60</div>
         </div>
       </div>
       <div class="menu-item">
         <div class="item-img"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&q=80" alt="Ayran" loading="lazy" /></div>
         <div class="item-info">
-          <div class="item-name">Ayran</div>
-          <div class="item-desc">Ev yapımı, taze ve köpüklü</div>
+          <div class="item-name" data-tr="Ayran" data-en="Ayran"></div>
+          <div class="item-desc" data-tr="Ev yapımı, taze ve köpüklü" data-en="Homemade, fresh and frothy yoghurt drink"></div>
           <div class="item-price">₺50</div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- ÇORBALAR -->
+  <div id="panel-soup" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&q=80" alt="Mercimek" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Mercimek Çorbası" data-en="Lentil Soup"></div>
+          <div class="item-desc" data-tr="Geleneksel kırmızı mercimek, limon ve nane ile" data-en="Traditional red lentil with lemon and mint"></div>
+          <div class="item-price">₺120</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=300&q=80" alt="Domates" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Domates Çorbası" data-en="Tomato Soup"></div>
+          <div class="item-desc" data-tr="Taze domates, krema ve fesleğen ile" data-en="Fresh tomatoes, cream and basil"></div>
+          <div class="item-price">₺130</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TATLILAR -->
+  <div id="panel-dessert" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=300&q=80" alt="Baklava" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Fıstıklı Baklava" data-en="Pistachio Baklava"></div>
+          <div class="item-desc" data-tr="Ev yapımı yufka, antep fıstığı ve şerbet ile" data-en="Homemade phyllo dough, pistachios and syrup"></div>
+          <div class="item-price">₺180</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80" alt="Cheesecake" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Cheesecake" data-en="Cheesecake"></div>
+          <div class="item-desc" data-tr="Frambuaz soslu, taze meyveli" data-en="With raspberry coulis and fresh berries"></div>
+          <div class="item-price">₺200</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SALATALAR -->
+  <div id="panel-salad" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80" alt="Mevsim" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Mevsim Salatası" data-en="Garden Salad"></div>
+          <div class="item-desc" data-tr="Taze mevsim sebzeleri, zeytinyağı ve limon sosu" data-en="Fresh seasonal vegetables with olive oil and lemon dressing"></div>
+          <div class="item-price">₺140</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=300&q=80" alt="Sezar" loading="lazy" /></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Sezar Salatası" data-en="Caesar Salad"></div>
+          <div class="item-desc" data-tr="Romaine marul, parmesan, kruton ve sezar sos" data-en="Romaine lettuce, parmesan, croutons and caesar dressing"></div>
+          <div class="item-price">₺170</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<a class="wa-btn" href="https://wa.me/905446282860" target="_blank" rel="noopener noreferrer">
+<!-- WHATSAPP BUTTON -->
+<a class="wa-btn" id="wa-btn" href="https://wa.me/905446282860" target="_blank" rel="noopener noreferrer">
   <svg class="wa-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
-  Sipariş Ver
+  <span id="wa-label">Sipariş Ver</span>
 </a>
 
 <script>
+  var currentLang = 'tr';
+  var strings = {
+    tr: { order: 'Sipariş Ver', flag: '🇬🇧', label: 'EN' },
+    en: { order: 'Order Now',   flag: '🇹🇷', label: 'TR' }
+  };
+
+  function applyLang(lang) {
+    currentLang = lang;
+    var s = strings[lang];
+    document.getElementById('wa-label').textContent   = s.order;
+    document.getElementById('lang-flag').textContent  = s.flag;
+    document.getElementById('lang-label').textContent = s.label;
+    document.querySelectorAll('[data-tr]').forEach(function(el) {
+      el.textContent = el.getAttribute('data-' + lang);
+    });
+    document.documentElement.lang = lang;
+  }
+
+  function setLang(lang) {
+    document.getElementById('lang-screen').style.display = 'none';
+    document.getElementById('menu').classList.add('visible');
+    document.getElementById('wa-btn').classList.add('visible');
+    applyLang(lang);
+  }
+
+  function toggleLang() {
+    applyLang(currentLang === 'tr' ? 'en' : 'tr');
+  }
+
   function switchTab(tab, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
     document.getElementById('panel-' + tab).classList.add('active');
     btn.classList.add('active');
+    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
 </script>
 </body>
