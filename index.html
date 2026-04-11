@@ -19,6 +19,8 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { background: var(--cream); }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: var(--cream);
@@ -76,7 +78,7 @@
       min-width: var(--content-min);
       margin: 0 auto;
       background: #fff;
-      min-height: 100vh;
+      min-height: calc(100vh - 56px);
       padding-bottom: 100px;
       display: none;
       margin-top: 56px;
@@ -99,11 +101,13 @@
       max-width: var(--content-max);
       min-width: var(--content-min);
       overflow-x: auto;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      touch-action: pan-x;
     }
     .tabs-bar::-webkit-scrollbar { display: none; }
-    .tabs { display: flex; }
+    .tabs { display: flex; touch-action: pan-x; }
     .tab-btn {
       flex: 0 0 auto;
       /* width JS tarafından set edilir */
