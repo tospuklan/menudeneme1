@@ -18,17 +18,10 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { background: var(--cream); }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: #1a1a1a; min-width: var(--content-min); }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--cream);
-      color: #1a1a1a;
-      min-width: var(--content-min);
-    }
-
-    /* ── DİL SEÇİM EKRANI ── */
+    /* ── DİL SEÇİM ── */
     #lang-screen {
       position: fixed; inset: 0; background: var(--cream); z-index: 999;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
@@ -40,83 +33,66 @@
       display: flex; align-items: center; justify-content: center;
       padding: 14px 0; border-radius: 10px; border: none;
       font-size: 15px; font-weight: 700; cursor: pointer;
-      background: var(--teal); color: #fff;
-      transition: background 0.2s;
+      background: var(--teal); color: #fff; transition: background 0.2s;
     }
     .lang-btn:hover { background: var(--teal-dark); }
 
-    /* ── FULL WIDTH WRAPPER (header + bg) ── */
+    /* ── FULL WIDTH HEADER ── */
     .full-width-header {
       position: fixed; top: 0; left: 0; right: 0;
-      background: var(--cream);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      z-index: 20;
-      display: flex; justify-content: center;
+      background: var(--cream); box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      z-index: 20; display: flex; justify-content: center;
     }
     .app-header {
-      width: 100%;
-      max-width: var(--content-max);
-      min-width: var(--content-min);
+      width: 100%; max-width: var(--content-max); min-width: var(--content-min);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 16px; height: 56px;
     }
-
     .lang-toggle {
       display: flex; align-items: center; gap: 6px;
       border: 1.5px solid var(--border-strong); border-radius: 8px;
       padding: 6px 10px; cursor: pointer; background: none;
       font-size: 12px; font-weight: 700; color: var(--teal);
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s, background 0.2s; white-space: nowrap;
     }
     .lang-toggle:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
 
-    /* ── CONTENT WRAPPER ── */
+    /* ── MENU WRAPPER ── */
     .menu-wrapper {
-      width: 100%;
-      max-width: var(--content-max);
-      min-width: var(--content-min);
-      margin: 0 auto;
-      background: #fff;
+      width: 100%; max-width: var(--content-max); min-width: var(--content-min);
+      margin: 0 auto; background: #fff;
       min-height: calc(100vh - 56px);
-      padding-bottom: 100px;
-      display: none;
-      margin-top: 56px;
+      padding-bottom: 100px; display: none; margin-top: 56px;
     }
     .menu-wrapper.visible { display: block; }
 
     /* ── HERO ── */
-    .hero { width: 100%; height: 200px; overflow: hidden; }
+    .hero { width: 100%; height: 180px; overflow: hidden; }
     .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* ── TABS (JS ile genişlik hesaplanıyor) ── */
+    /* ── TABS ── */
     .full-width-tabs {
       position: sticky; top: 56px; z-index: 10;
       display: flex; justify-content: center;
-      background: #fff;
-      border-bottom: 2px solid var(--cream);
+      background: #fff; border-bottom: 2px solid var(--cream);
     }
     .tabs-bar {
-      width: 100%;
-      max-width: var(--content-max);
-      min-width: var(--content-min);
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      width: 100%; max-width: var(--content-max); min-width: var(--content-min);
+      overflow-x: auto; overflow-y: hidden;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
       touch-action: pan-x;
     }
     .tabs-bar::-webkit-scrollbar { display: none; }
     .tabs { display: flex; touch-action: pan-x; }
     .tab-btn {
       flex: 0 0 auto;
-      /* width JS tarafından set edilir */
       padding: 13px 0; border: none; background: none;
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
       color: var(--muted); cursor: pointer;
       border-bottom: 3px solid transparent; margin-bottom: -2px;
       transition: color 0.2s, border-color 0.2s;
-      text-transform: uppercase; white-space: nowrap; text-align: center;
+      text-transform: uppercase; white-space: pre; text-align: center;
+      line-height: 1.3; padding: 10px 0;
     }
     .tab-btn.active { color: var(--teal); border-bottom-color: var(--red); }
 
@@ -124,25 +100,33 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
+    /* ── SECTION HEADER (Sıcak / Soğuk gibi alt başlıklar) ── */
+    .section-header {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 16px 16px 4px; border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
     /* ── MENU LIST ── */
     .menu-list { padding: 0 16px; }
     .menu-item {
       display: flex; gap: 14px; align-items: flex-start;
-      padding: 16px 0; border-bottom: 1px solid var(--border);
+      padding: 14px 0; border-bottom: 1px solid var(--border);
     }
     .menu-item:last-child { border-bottom: none; }
     .item-img {
-      width: 100px; height: 100px; min-width: 100px;
+      width: 88px; height: 88px; min-width: 88px;
       border-radius: 8px; overflow: hidden;
       background: var(--cream); border: 1px solid var(--border);
     }
     .item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .item-info { flex: 1; display: flex; flex-direction: column; gap: 5px; padding-top: 2px; }
+    .item-info { flex: 1; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
     .item-name { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
-    .item-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
-    .item-price { font-size: 14px; font-weight: 700; color: var(--teal); margin-top: 6px; letter-spacing: 0.03em; }
+    .item-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
+    .item-price { font-size: 13px; font-weight: 700; color: var(--teal); margin-top: 5px; }
 
-    /* ── WHATSAPP BUTTON ── */
+    /* ── WHATSAPP ── */
     .wa-btn {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
       background: #25D366; color: #fff; border: none; border-radius: 50px;
@@ -156,23 +140,17 @@
     .wa-btn:active { transform: translateX(-50%) scale(0.97); }
     .wa-icon { width: 22px; height: 22px; flex-shrink: 0; }
 
-    /* ── 600px üzeri: content sabit, arka plan açılır ── */
     @media (min-width: 600px) {
-      .menu-wrapper {
-        border-left: 1px solid var(--border);
-        border-right: 1px solid var(--border);
-      }
-      .hero { height: 230px; }
-      .item-img { width: 120px; height: 120px; min-width: 120px; }
-      .item-name { font-size: 15px; }
-      .item-desc { font-size: 13px; }
-      .item-price { font-size: 15px; }
+      .menu-wrapper { border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+      .hero { height: 220px; }
+      .item-img { width: 100px; height: 100px; min-width: 100px; }
+      .item-name { font-size: 15px; } .item-desc { font-size: 12px; } .item-price { font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
-<!-- DİL SEÇİM EKRANI -->
+<!-- DİL SEÇİM -->
 <div id="lang-screen">
   <img class="lang-logo-img" src="logo.png" alt="Urban Bites" />
   <div class="lang-subtitle">Lütfen dilinizi seçin · Please select</div>
@@ -182,10 +160,10 @@
   </div>
 </div>
 
-<!-- HEADER — full width, content max 600px -->
+<!-- HEADER -->
 <div class="full-width-header" id="main-header" style="display:none;">
   <div class="app-header">
-    <img src="logotype.png" alt="Urban Bites" style="height: 24px; width: auto;" />
+    <img src="logotype.png" alt="Urban Bites" style="height:24px;width:auto;" />
     <button class="lang-toggle" onclick="toggleLang()">
       <span id="lang-flag">🇬🇧</span>
       <span id="lang-label">EN</span>
@@ -200,149 +178,87 @@
     <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=900&q=85" alt="Urban Bites" loading="lazy" />
   </div>
 
-  <!-- TABS — full width wrap, content sınırlı -->
   <div class="full-width-tabs">
     <div class="tabs-bar" id="tabs-bar">
       <div class="tabs" id="tabs-container">
-        <button class="tab-btn active" id="tab-food"    onclick="switchTab('food', this)"    data-tr="Yiyecek"   data-en="Food"></button>
-        <button class="tab-btn"        id="tab-burger"  onclick="switchTab('burger', this)"  data-tr="Burger"    data-en="Burger"></button>
-        <button class="tab-btn"        id="tab-drink"   onclick="switchTab('drink', this)"   data-tr="İçecek"    data-en="Drinks"></button>
-        <button class="tab-btn"        id="tab-soup"    onclick="switchTab('soup', this)"    data-tr="Çorbalar"  data-en="Soups"></button>
-        <button class="tab-btn"        id="tab-dessert" onclick="switchTab('dessert', this)" data-tr="Tatlılar"  data-en="Desserts"></button>
-        <button class="tab-btn"        id="tab-salad"   onclick="switchTab('salad', this)"   data-tr="Salatalar" data-en="Salads"></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- YİYECEK -->
-  <div id="panel-food" class="tab-panel active">
-    <div class="menu-list">
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=300&q=80" alt="Levrek" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Izgara Levrek" data-en="Grilled Sea Bass"></div>
-          <div class="item-desc" data-tr="Taze levrek, zeytinyağı, limon, kekik ve mevsim sebzeleri ile" data-en="Fresh sea bass with olive oil, lemon, thyme and seasonal vegetables"></div>
-          <div class="item-price">₺320</div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=300&q=80" alt="Kuzu" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Kuzu İncik" data-en="Lamb Shank"></div>
-          <div class="item-desc" data-tr="Fırında pişmiş kuzu incik, patates püresi ve mevsim sebzeleri" data-en="Slow-roasted lamb shank with mashed potatoes and seasonal vegetables"></div>
-          <div class="item-price">₺480</div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=300&q=80" alt="Risotto" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Mantarlı Risotto" data-en="Mushroom Risotto"></div>
-          <div class="item-desc" data-tr="Orman mantarları, parmesan, taze kekik ve tereyağı ile" data-en="Wild mushrooms, parmesan, fresh thyme and butter"></div>
-          <div class="item-price">₺260</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BURGER -->
-  <div id="panel-burger" class="tab-panel">
-    <div class="menu-list">
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80" alt="Classic Burger" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Klasik Burger" data-en="Classic Burger"></div>
-          <div class="item-desc" data-tr="Dana köfte, cheddar, marul, domates, özel sos" data-en="Beef patty, cheddar, lettuce, tomato, house sauce"></div>
-          <div class="item-price">₺280</div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300&q=80" alt="Smoky Burger" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Smoky BBQ Burger" data-en="Smoky BBQ Burger"></div>
-          <div class="item-desc" data-tr="Karamelize soğan, bacon, BBQ sos ve gouda peyniri" data-en="Caramelized onion, bacon, BBQ sauce and gouda cheese"></div>
-          <div class="item-price">₺340</div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=300&q=80" alt="Veggie Burger" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Veggie Burger" data-en="Veggie Burger"></div>
-          <div class="item-desc" data-tr="Nohut köfte, avokado, rokoka ve limonlu yoğurt sos" data-en="Chickpea patty, avocado, rocket and lemon yoghurt sauce"></div>
-          <div class="item-price">₺240</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- İÇECEK -->
-  <div id="panel-drink" class="tab-panel">
-    <div class="menu-list">
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=300&q=80" alt="Kola" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Kola" data-en="Cola"></div>
-          <div class="item-desc" data-tr="Soğuk servis, buz ve limon dilimiyle" data-en="Served cold with ice and a slice of lemon"></div>
-          <div class="item-price">₺60</div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300&q=80" alt="Fanta" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Fanta" data-en="Fanta"></div>
-          <div class="item-desc" data-tr="Portakal aromalı, soğuk servis" data-en="Orange flavoured, served cold"></div>
-          <div class="item-price">₺60</div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&q=80" alt="Ayran" loading="lazy" /></div>
-        <div class="item-info">
-          <div class="item-name" data-tr="Ayran" data-en="Ayran"></div>
-          <div class="item-desc" data-tr="Ev yapımı, taze ve köpüklü" data-en="Homemade, fresh and frothy yoghurt drink"></div>
-          <div class="item-price">₺50</div>
-        </div>
+        <button class="tab-btn active" id="tab-soup"     onclick="switchTab('soup',this)"     data-tr="Çorbalar"              data-en="Soups"></button>
+        <button class="tab-btn"        id="tab-toast"    onclick="switchTab('toast',this)"    data-tr="Tostlar"               data-en="Toasts"></button>
+        <button class="tab-btn"        id="tab-hotsw"    onclick="switchTab('hotsw',this)"    data-tr="Sıcak&#10;Sandwich"    data-en="Hot&#10;Sandwich"></button>
+        <button class="tab-btn"        id="tab-coldsw"   onclick="switchTab('coldsw',this)"   data-tr="Soğuk&#10;Sandwich"    data-en="Cold&#10;Sandwich"></button>
+        <button class="tab-btn"        id="tab-burger"   onclick="switchTab('burger',this)"   data-tr="Burgerler"             data-en="Burgers"></button>
+        <button class="tab-btn"        id="tab-wrap"     onclick="switchTab('wrap',this)"     data-tr="Dürümler"              data-en="Wraps"></button>
+        <button class="tab-btn"        id="tab-taco"     onclick="switchTab('taco',this)"     data-tr="Tacolar"               data-en="Tacos"></button>
+        <button class="tab-btn"        id="tab-pasta"    onclick="switchTab('pasta',this)"    data-tr="Makarnalar"            data-en="Pasta"></button>
+        <button class="tab-btn"        id="tab-salad"    onclick="switchTab('salad',this)"    data-tr="Salatalar"             data-en="Salads"></button>
+        <button class="tab-btn"        id="tab-classic"  onclick="switchTab('classic',this)"  data-tr="Classic"               data-en="Classic"></button>
+        <button class="tab-btn"        id="tab-snack"    onclick="switchTab('snack',this)"    data-tr="Atıştırmalık"          data-en="Snacks"></button>
       </div>
     </div>
   </div>
 
   <!-- ÇORBALAR -->
-  <div id="panel-soup" class="tab-panel">
+  <div id="panel-soup" class="tab-panel active">
     <div class="menu-list">
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&q=80" alt="Mercimek" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&q=80" alt="Mercimek Çorbası" loading="lazy"/></div>
         <div class="item-info">
-          <div class="item-name" data-tr="Mercimek Çorbası" data-en="Lentil Soup"></div>
-          <div class="item-desc" data-tr="Geleneksel kırmızı mercimek, limon ve nane ile" data-en="Traditional red lentil with lemon and mint"></div>
-          <div class="item-price">₺120</div>
+          <div class="item-name" data-tr="Mercimek Çorbası" data-en="Red Lentil Soup"></div>
+          <div class="item-desc" data-tr="Kırmızı mercimek ve baharatlar" data-en="Red lentils and spices"></div>
+          <div class="item-price">₺150</div>
         </div>
       </div>
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=300&q=80" alt="Domates" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=300&q=80" alt="Tavuk Çorbası" loading="lazy"/></div>
         <div class="item-info">
-          <div class="item-name" data-tr="Domates Çorbası" data-en="Tomato Soup"></div>
-          <div class="item-desc" data-tr="Taze domates, krema ve fesleğen ile" data-en="Fresh tomatoes, cream and basil"></div>
-          <div class="item-price">₺130</div>
+          <div class="item-name" data-tr="Tavuk Çorbası" data-en="Chicken Soup"></div>
+          <div class="item-desc" data-tr="Tavuk suyu, sebze ve baharatlar" data-en="Chicken broth, vegetables and spices"></div>
+          <div class="item-price">₺250</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TATLILAR -->
-  <div id="panel-dessert" class="tab-panel">
+  <!-- TOSTLAR -->
+  <div id="panel-toast" class="tab-panel">
     <div class="menu-list">
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=300&q=80" alt="Baklava" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300&q=80" alt="Kaşarlı Tost" loading="lazy"/></div>
         <div class="item-info">
-          <div class="item-name" data-tr="Fıstıklı Baklava" data-en="Pistachio Baklava"></div>
-          <div class="item-desc" data-tr="Ev yapımı yufka, antep fıstığı ve şerbet ile" data-en="Homemade phyllo dough, pistachios and syrup"></div>
-          <div class="item-price">₺180</div>
+          <div class="item-name" data-tr="Kaşarlı Tost" data-en="Cheese Toast"></div>
+          <div class="item-desc" data-tr="" data-en=""></div>
+          <div class="item-price">₺120</div>
         </div>
       </div>
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&q=80" alt="Cheesecake" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=300&q=80" alt="Klasik Tost" loading="lazy"/></div>
         <div class="item-info">
-          <div class="item-name" data-tr="Cheesecake" data-en="Cheesecake"></div>
-          <div class="item-desc" data-tr="Frambuaz soslu, taze meyveli" data-en="With raspberry coulis and fresh berries"></div>
-          <div class="item-price">₺200</div>
+          <div class="item-name" data-tr="Klasik Tost" data-en="Classic Toast"></div>
+          <div class="item-desc" data-tr="Kaşar, sucuk, salça" data-en="Cheese, sausage, tomato paste"></div>
+          <div class="item-price">₺160</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1619096252214-ef06c45683e3?w=300&q=80" alt="Bazlama Tost" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Bazlama Tost" data-en="Bazlama Toast"></div>
+          <div class="item-desc" data-tr="Domates, közlenmiş biber, Ezine peyniri" data-en="Tomato, roasted pepper, Ezine cheese"></div>
+          <div class="item-price">₺240</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=300&q=80" alt="Kavurmalı Tost" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Kavurmalı Tost" data-en="Kavurma Toast"></div>
+          <div class="item-desc" data-tr="Kavurma, kaşar peyniri" data-en="Kavurma (braised beef), melted cheese"></div>
+          <div class="item-price">₺320</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1603046891744-1f3930cb2b4a?w=300&q=80" alt="Pesto Avokado Tost" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Pesto Avokado Tost" data-en="Pesto Avocado Toast"></div>
+          <div class="item-desc" data-tr="Pesto, avokado püresi, çeçil peyniri, cheddar" data-en="Pesto, avocado purée, string cheese, cheddar"></div>
+          <div class="item-price">₺350</div>
         </div>
       </div>
     </div>
@@ -352,19 +268,299 @@
   <div id="panel-salad" class="tab-panel">
     <div class="menu-list">
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80" alt="Mevsim" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=300&q=80" alt="Sezar Salata" loading="lazy"/></div>
         <div class="item-info">
-          <div class="item-name" data-tr="Mevsim Salatası" data-en="Garden Salad"></div>
-          <div class="item-desc" data-tr="Taze mevsim sebzeleri, zeytinyağı ve limon sosu" data-en="Fresh seasonal vegetables with olive oil and lemon dressing"></div>
-          <div class="item-price">₺140</div>
+          <div class="item-name" data-tr="Sezar Salata" data-en="Caesar Salad"></div>
+          <div class="item-desc" data-tr="Tavuk parçaları, çıtır marul, sezar sos, kruton ekmeği, çeri domates, parmesan peyniri" data-en="Chicken pieces, crispy romaine, caesar dressing, croutons, cherry tomatoes, parmesan"></div>
+          <div class="item-price">₺295</div>
         </div>
       </div>
       <div class="menu-item">
-        <div class="item-img"><img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=300&q=80" alt="Sezar" loading="lazy" /></div>
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&q=80" alt="Akdeniz Salata" loading="lazy"/></div>
         <div class="item-info">
-          <div class="item-name" data-tr="Sezar Salatası" data-en="Caesar Salad"></div>
-          <div class="item-desc" data-tr="Romaine marul, parmesan, kruton ve sezar sos" data-en="Romaine lettuce, parmesan, croutons and caesar dressing"></div>
-          <div class="item-price">₺170</div>
+          <div class="item-name" data-tr="Akdeniz Salata" data-en="Mediterranean Salad"></div>
+          <div class="item-desc" data-tr="Roka, iceberg, mor marul, endivyen, kuru domates, beyaz peynir, çeri domates, zeytinyağlı limon sosu" data-en="Rocket, iceberg, red lettuce, endive, sun-dried tomato, feta, cherry tomatoes, olive oil & lemon dressing"></div>
+          <div class="item-price">₺210</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&q=80" alt="Ton Balıklı Salata" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Ton Balıklı Salata" data-en="Tuna Salad"></div>
+          <div class="item-desc" data-tr="Ton balığı, roka, marul, kırmızı soğan, mısır, avokado, zeytinyağlı limon sosu" data-en="Tuna, rocket, lettuce, red onion, corn, avocado, olive oil & lemon dressing"></div>
+          <div class="item-price">₺300</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DÜRÜMLER -->
+  <div id="panel-wrap" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=300&q=80" alt="Kumru Dürüm" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Kumru Dürüm" data-en="Kumru Wrap"></div>
+          <div class="item-desc" data-tr="Sucuk, sosis, salam, eritilmiş kaşar, kornişon turşu" data-en="Turkish sausage, salami, melted cheese, gherkin pickles"></div>
+          <div class="item-price">₺220</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=300&q=80" alt="Sezar Soslu Tavuk Dürüm" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Sezar Soslu Tavuk Dürüm" data-en="Caesar Chicken Wrap"></div>
+          <div class="item-desc" data-tr="Pane tavuk parçaları, füme et, marul, sezar sos" data-en="Breaded chicken, smoked meat, lettuce, caesar dressing"></div>
+          <div class="item-price">₺230</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=300&q=80" alt="Urban Bites Dürüm" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Urban Bites Dürüm" data-en="Urban Bites Wrap"></div>
+          <div class="item-desc" data-tr="Baharatlı tavuk, sumaklı soğan, kornişon turşu, kibrit patates, ketçaplı mayonezli sos" data-en="Spiced chicken, sumac onion, gherkin pickles, thin fries, ketchup mayo sauce"></div>
+          <div class="item-price">₺230</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1604152135912-04a022e23696?w=300&q=80" alt="Et Dürüm" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Et Dürüm" data-en="Beef Wrap"></div>
+          <div class="item-desc" data-tr="Et parçaları, biber, soğan, mantar, kaşar peyniri" data-en="Beef pieces, pepper, onion, mushroom, melted cheese"></div>
+          <div class="item-price">₺295</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SICAK SANDWİCHLER -->
+  <div id="panel-hotsw" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=300&q=80" alt="Krema Soslu Tavuk Sandwich" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Krema Soslu Tavuk Sandwich" data-en="Creamy Chicken Sandwich"></div>
+          <div class="item-desc" data-tr="Ekşi mayalı ekmek, tavuk parçaları, sarımsaklı tereyağı, eritilmiş kaşar" data-en="Sourdough bread, tender chicken pieces, garlic butter, melted cheese"></div>
+          <div class="item-price">₺330</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1612392062631-94a83e8c3cba?w=300&q=80" alt="Hot Dog" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Hot Dog" data-en="Hot Dog"></div>
+          <div class="item-desc" data-tr="Dana sosis, salçalı tereyağlı sos, hardal, ketçap, turşu" data-en="Beef sausage, tomato-butter sauce, mustard, ketchup, pickles"></div>
+          <div class="item-price">₺180</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1567234669003-dce7a7a88821?w=300&q=80" alt="Club Sandwich" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Club Sandwich" data-en="Club Sandwich"></div>
+          <div class="item-desc" data-tr="Izgara tavuk, jambon, yumurta, kaşar, marul, turşu" data-en="Grilled chicken, ham, egg, cheese, lettuce, pickles"></div>
+          <div class="item-price">₺350</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80" alt="Urban Bites Sandwich" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Urban Bites Signature Sandwich" data-en="Urban Bites Signature Sandwich"></div>
+          <div class="item-desc" data-tr="Trabzon ekmeği, biftek eti, eritme peynir, karamelize soğan, roka" data-en="Traditional bread, grilled steak, melted cheese, caramelized onions, rocket"></div>
+          <div class="item-price">₺400</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOĞUK SANDWİCHLER -->
+  <div id="panel-coldsw" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1603046891744-1f3930cb2b4a?w=300&q=80" alt="Pesto Mozzarella Sandwich" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Pesto Mozzarella Sandwich" data-en="Pesto Mozzarella Sandwich"></div>
+          <div class="item-desc" data-tr="Focaccia, pesto, mozzarella peyniri, domates" data-en="Focaccia, fresh mozzarella, pesto sauce, tomatoes"></div>
+          <div class="item-price">₺310</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=300&q=80" alt="Füme Et Sandwich" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Füme Et Sandwich" data-en="Smoked Beef Sandwich"></div>
+          <div class="item-desc" data-tr="Ekşi mayalı ekmek, füme et, domates, dilim kaşar, roka yaprakları, zeytinyağı" data-en="Sourdough bread, smoked beef, sliced cheese, tomatoes, rocket, olive oil"></div>
+          <div class="item-price">₺360</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=300&q=80" alt="Füme Somon Sandwich" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Füme Somon Sandwich" data-en="Smoked Salmon Sandwich"></div>
+          <div class="item-desc" data-tr="Ekşi mayalı ekmek, füme somon, avokado salsa, roka, zeytinyağı, peynir mousse" data-en="Sourdough bread, smoked salmon, avocado salsa, rocket, olive oil, cheese mousse"></div>
+          <div class="item-price">₺380</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BURGERLER -->
+  <div id="panel-burger" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80" alt="Classic Burger" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Classic Burger" data-en="Classic Burger"></div>
+          <div class="item-desc" data-tr="130gr hamburger köftesi, marul, domates, turşu, soğan" data-en="130gr beef patty, lettuce, tomato, pickles, onion"></div>
+          <div class="item-price">₺450</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300&q=80" alt="Cheese Burger" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Cheese Burger" data-en="Cheeseburger"></div>
+          <div class="item-desc" data-tr="130gr hamburger köftesi, cheddar peynir, marul, domates, soğan, turşu" data-en="130gr beef patty, cheddar cheese, lettuce, tomato, onion, pickles"></div>
+          <div class="item-price">₺465</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=300&q=80" alt="Çıtır Tavuk Burger" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Çıtır Tavuk Burger" data-en="Crispy Chicken Burger"></div>
+          <div class="item-desc" data-tr="Çıtır pane tavuk, turşu, marul, karamelize soğan, özel sos" data-en="Breaded crispy chicken, lettuce, pickles, caramelized onions, special sauce"></div>
+          <div class="item-price">₺420</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=300&q=80" alt="Tandır Burger" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Tandır Burger" data-en="Slow-Cooked Beef Burger"></div>
+          <div class="item-desc" data-tr="Fırında 6 saat pişirilmiş dana eti, eritme peynir, karamelize soğan" data-en="6-hour oven-cooked tender beef, melted cheese, caramelized onions"></div>
+          <div class="item-price">₺600</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1547584370-2cc98b8b8dc8?w=300&q=80" alt="Urban Bites Burger" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Urban Bites Signature Burger" data-en="Urban Bites Signature Burger"></div>
+          <div class="item-desc" data-tr="Özel double urban köfte, füme et, kibrit patates, karamelize soğan, özel sos" data-en="Double special beef patties, smoked meat, thin fries, caramelized onions, signature sauce"></div>
+          <div class="item-price">₺650</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&q=80" alt="Islak Hamburger" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Islak Hamburger" data-en="Wet Burger (Istanbul Style)"></div>
+          <div class="item-desc" data-tr="Köfte, hamburger ekmeği" data-en="Beef patty in a soft bun with special tomato sauce"></div>
+          <div class="item-price">₺180</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TACOLAR -->
+  <div id="panel-taco" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300&q=80" alt="Et Taco" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Et Taco" data-en="Beef Taco"></div>
+          <div class="item-desc" data-tr="Tiftik tandır et, marul, domates, jalapeño biber, kaşar, ekşi krema, guacamole" data-en="Pulled slow-cooked beef, lettuce, tomatoes, jalapeños, cheese, sour cream, guacamole"></div>
+          <div class="item-price">₺400</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=300&q=80" alt="Tavuk Taco" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Tavuk Taco" data-en="Chicken Taco"></div>
+          <div class="item-desc" data-tr="Tavuk parçaları, kaşar peyniri, marul, soğan, ekşi krema, guacamole" data-en="Chicken pieces, cheese, lettuce, onion, sour cream, guacamole"></div>
+          <div class="item-price">₺320</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAKARNALAR -->
+  <div id="panel-pasta" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=300&q=80" alt="Fettuccine" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Fettuccine" data-en="Fettuccine Alfredo Style"></div>
+          <div class="item-desc" data-tr="Tavuk, krema, mantar, sarımsak, fesleğen" data-en="Chicken, cream, mushrooms, garlic, basil"></div>
+          <div class="item-price">₺310</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=300&q=80" alt="Penne Arrabbiata" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Penne Arrabbiata" data-en="Penne Arrabbiata"></div>
+          <div class="item-desc" data-tr="Arrabbiata sos, zeytin, parmesan, acı sos, tereyağı" data-en="Spicy arrabbiata sauce, olives, parmesan, butter"></div>
+          <div class="item-price">₺250</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=300&q=80" alt="Pesto Soslu Makarna" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Pesto Soslu Makarna" data-en="Creamy Pesto Pasta"></div>
+          <div class="item-desc" data-tr="Pesto, krema, sarımsak" data-en="Pesto sauce, cream, parmesan, garlic"></div>
+          <div class="item-price">₺290</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- URBAN BITES CLASSIC -->
+  <div id="panel-classic" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=80" alt="Tavuk Pilav" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Tavuk, Pilav ve Nohut" data-en="Chicken, Rice &amp; Chickpeas Plate"></div>
+          <div class="item-desc" data-tr="Turşu ile servis edilir" data-en="Served with pickles"></div>
+          <div class="item-price">₺150</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATIŞTIRMALIKLAR -->
+  <div id="panel-snack" class="tab-panel">
+    <div class="menu-list">
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300&q=80" alt="Patates Kızartması" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Patates Kızartması" data-en="French Fries"></div>
+          <div class="item-desc" data-tr="" data-en=""></div>
+          <div class="item-price">₺150</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1639024471283-03518883512d?w=300&q=80" alt="Soğan Halkası" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Soğan Halkası" data-en="Onion Rings"></div>
+          <div class="item-desc" data-tr="" data-en=""></div>
+          <div class="item-price">₺150</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1548340748-6d2b7d7da280?w=300&q=80" alt="Peynir Çubukları" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Peynir Çubukları" data-en="Mozzarella Sticks"></div>
+          <div class="item-desc" data-tr="" data-en=""></div>
+          <div class="item-price">₺180</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&q=80" alt="Maydanozlu Patates" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Maydanozlu ve Acı Soslu Patates" data-en="Fries with Parsley &amp; Hot Sauce"></div>
+          <div class="item-desc" data-tr="" data-en=""></div>
+          <div class="item-price">₺160</div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-img"><img src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=300&q=80" alt="Parmesanlı Patates" loading="lazy"/></div>
+        <div class="item-info">
+          <div class="item-name" data-tr="Parmesanlı ve Trüf Yağlı Patates" data-en="Fries with Parmesan &amp; Truffle Oil"></div>
+          <div class="item-desc" data-tr="" data-en=""></div>
+          <div class="item-price">₺180</div>
         </div>
       </div>
     </div>
@@ -372,7 +568,7 @@
 
 </div>
 
-<!-- WHATSAPP BUTTON -->
+<!-- WHATSAPP -->
 <a class="wa-btn" id="wa-btn" href="https://wa.me/905446282860" target="_blank" rel="noopener noreferrer">
   <svg class="wa-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -387,48 +583,27 @@
     en: { order: 'Order Now',   flag: '🇹🇷', label: 'TR' }
   };
 
-  // Tab genişliği hesaplama
-  // En geniş label + 32px padding = min tab genişliği
-  // Görünür alan / tab genişliği = kaç tab sığar
-  // .5'e yuvarla aşağı (3.5, 4.5, 5.5), tab genişliğini buna göre ayarla
   function calcTabWidth() {
     var tabs = document.querySelectorAll('.tab-btn');
-    var bar  = document.getElementById('tabs-bar');
-    var containerWidth = Math.min(bar.offsetWidth, 600);
-    containerWidth = Math.max(containerWidth, 300);
-
-    // Canvas ile her tab label'ının px genişliğini ölç
+    var bar = document.getElementById('tabs-bar');
+    var containerWidth = Math.min(Math.max(bar.offsetWidth, 300), 600);
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
     ctx.font = '700 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-
-    var maxLabelWidth = 0;
+    var maxWordWidth = 0;
     tabs.forEach(function(btn) {
-      var trLabel = btn.getAttribute('data-tr') || btn.textContent;
-      var enLabel = btn.getAttribute('data-en') || btn.textContent;
-      var trW = ctx.measureText(trLabel.toUpperCase()).width;
-      var enW = ctx.measureText(enLabel.toUpperCase()).width;
-      maxLabelWidth = Math.max(maxLabelWidth, trW, enW);
+      var trWords = (btn.getAttribute('data-tr') || '').toUpperCase().replace(/&#10;/g, ' ').split(' ');
+      var enWords = (btn.getAttribute('data-en') || '').toUpperCase().replace(/&#10;/g, ' ').split(' ');
+      trWords.concat(enWords).forEach(function(word) {
+        if (word) maxWordWidth = Math.max(maxWordWidth, ctx.measureText(word).width);
+      });
     });
-
-    var minTabWidth = Math.ceil(maxLabelWidth) + 32; // 16px padding her iki yandan
-
-    // Kaç tam tab sığar?
+    var minTabWidth = Math.ceil(maxWordWidth) + 32;
     var fitsFloat = containerWidth / minTabWidth;
-
-    // .5 basamaklarına yuvarla aşağı: 3.5, 4.5, 5.5 ...
-    // Her zaman .5'li olacak: 3.5, 4.5, 5.5 ...
-    // Math.floor ile tam sayıya indir, sonra 0.5 ekle
     var half = Math.floor(fitsFloat) + 0.5;
-
-    // En az 3.5 olsun
     if (half < 3.5) half = 3.5;
-
     var tabWidth = Math.floor(containerWidth / half);
-
-    tabs.forEach(function(btn) {
-      btn.style.width = tabWidth + 'px';
-    });
+    tabs.forEach(function(btn) { btn.style.width = tabWidth + 'px'; });
   }
 
   function applyLang(lang) {
@@ -438,7 +613,12 @@
     document.getElementById('lang-flag').textContent  = s.flag;
     document.getElementById('lang-label').textContent = s.label;
     document.querySelectorAll('[data-tr]').forEach(function(el) {
-      el.textContent = el.getAttribute('data-' + lang);
+      // Tab butonları için innerText (&#10; → newline), diğerleri için textContent
+      if (el.classList.contains('tab-btn')) {
+        el.innerText = el.getAttribute('data-' + lang).replace(/&#10;/g, '\n');
+      } else {
+        el.textContent = el.getAttribute('data-' + lang);
+      }
     });
     document.documentElement.lang = lang;
     calcTabWidth();
@@ -452,9 +632,7 @@
     applyLang(lang);
   }
 
-  function toggleLang() {
-    applyLang(currentLang === 'tr' ? 'en' : 'tr');
-  }
+  function toggleLang() { applyLang(currentLang === 'tr' ? 'en' : 'tr'); }
 
   function switchTab(tab, btn) {
     document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
