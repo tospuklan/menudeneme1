@@ -6,41 +6,41 @@
   <title>Urban Bites</title>
   <style>
     :root {
-      --cream:         #F2EFE6;
-      --teal:          #2A7F7F;
-      --teal-dark:     #1d5f5f;
-      --red:           #CC3300;
-      --muted:         #8a8070;
-      --border:        rgba(42,127,127,0.15);
-      --border-strong: rgba(42,127,127,0.3);
+      --cream:         #111111;
+      --teal:          #FF8E42;
+      --teal-dark:     #e07030;
+      --red:            #FF8E42;
+      --muted:          #999999;
+      --border:        rgba(255,142,66,0.2);
+      --border-strong: rgba(255,142,66,0.4);
       --content-max:   600px;
       --content-min:   300px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background: var(--cream); }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: #1a1a1a; min-width: var(--content-min); }
+    html { background: #111111; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111111; color: #ffffff; min-width: var(--content-min); }
 
     /* ── DİL SEÇİM ── */
     #lang-screen {
-      position: fixed; inset: 0; background: var(--cream); z-index: 999;
+      position: fixed; inset: 0; background: #111111; z-index: 999;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
     }
     .lang-logo-img { width: 220px; height: auto; }
-    .lang-subtitle { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+    .lang-subtitle { font-size: 12px; color: #888; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
     .lang-buttons { display: flex; flex-direction: column; gap: 12px; width: 240px; }
     .lang-btn {
       display: flex; align-items: center; justify-content: center;
       padding: 14px 0; border-radius: 10px; border: none;
       font-size: 15px; font-weight: 700; cursor: pointer;
-      background: var(--teal); color: #fff; transition: background 0.2s;
+      background: #FF8E42; color: #111; transition: background 0.2s;
     }
-    .lang-btn:hover { background: var(--teal-dark); }
+    .lang-btn:hover { background: #e07030; }
 
     /* ── FULL WIDTH HEADER ── */
     .full-width-header {
       position: fixed; top: 0; left: 0; right: 0;
-      background: var(--cream); box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      background: #1a1a1a; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       z-index: 20; display: flex; justify-content: center;
     }
     .app-header {
@@ -50,17 +50,17 @@
     }
     .lang-toggle {
       display: flex; align-items: center; gap: 6px;
-      border: 1.5px solid var(--border-strong); border-radius: 8px;
+      border: 1.5px solid rgba(255,142,66,0.4); border-radius: 8px;
       padding: 6px 10px; cursor: pointer; background: none;
-      font-size: 12px; font-weight: 700; color: var(--teal);
+      font-size: 12px; font-weight: 700; color: #FF8E42;
       transition: color 0.2s, border-color 0.2s, background 0.2s; white-space: nowrap;
     }
-    .lang-toggle:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+    .lang-toggle:hover { background: #FF8E42; color: #111; border-color: #FF8E42; }
 
     /* ── MENU WRAPPER ── */
     .menu-wrapper {
       width: 100%; max-width: var(--content-max); min-width: var(--content-min);
-      margin: 0 auto; background: #fff;
+      margin: 0 auto; background: #1a1a1a;
       min-height: calc(100vh - 56px);
       padding-bottom: 100px; display: none; margin-top: 56px;
     }
@@ -74,7 +74,7 @@
     .full-width-tabs {
       position: sticky; top: 56px; z-index: 10;
       display: flex; justify-content: center;
-      background: #fff; border-bottom: 2px solid var(--cream);
+      background: #1a1a1a; border-bottom: 2px solid #333;
     }
     .tabs-bar {
       width: 100%; max-width: var(--content-max); min-width: var(--content-min);
@@ -88,13 +88,13 @@
       flex: 0 0 auto;
       padding: 13px 0; border: none; background: none;
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-      color: var(--muted); cursor: pointer;
+      color: #888; cursor: pointer;
       border-bottom: 3px solid transparent; margin-bottom: -2px;
       transition: color 0.2s, border-color 0.2s;
       text-transform: uppercase; white-space: pre; text-align: center;
       line-height: 1.3; padding: 10px 0;
     }
-    .tab-btn.active { color: var(--teal); border-bottom-color: var(--red); }
+    .tab-btn.active { color: #FF8E42; border-bottom-color: #FF8E42; }
 
     /* ── PANELS ── */
     .tab-panel { display: none; }
@@ -103,7 +103,7 @@
     /* ── SECTION HEADER (Sıcak / Soğuk gibi alt başlıklar) ── */
     .section-header {
       font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--muted);
+      text-transform: uppercase; color: #888;
       padding: 16px 16px 4px; border-bottom: 1px solid var(--border);
       margin-bottom: 0;
     }
@@ -112,19 +112,19 @@
     .menu-list { padding: 0 16px; }
     .menu-item {
       display: flex; gap: 14px; align-items: flex-start;
-      padding: 14px 0; border-bottom: 1px solid var(--border);
+      padding: 14px 0; border-bottom: 1px solid rgba(255,142,66,0.15);
     }
     .menu-item:last-child { border-bottom: none; }
     .item-img {
       width: 88px; height: 88px; min-width: 88px;
       border-radius: 8px; overflow: hidden;
-      background: var(--cream); border: 1px solid var(--border);
+      background: #222; border: 1px solid rgba(255,142,66,0.2);
     }
     .item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .item-info { flex: 1; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
-    .item-name { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
-    .item-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
-    .item-price { font-size: 13px; font-weight: 700; color: var(--teal); margin-top: 5px; }
+    .item-name { font-size: 14px; font-weight: 700; color: #ffffff; line-height: 1.3; }
+    .item-desc { font-size: 11px; color: #888; line-height: 1.55; }
+    .item-price { font-size: 13px; font-weight: 700; color: #FF8E42; margin-top: 5px; }
 
     /* ── WHATSAPP ── */
     .wa-btn {
@@ -141,7 +141,7 @@
     .wa-icon { width: 22px; height: 22px; flex-shrink: 0; }
 
     @media (min-width: 600px) {
-      .menu-wrapper { border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+      .menu-wrapper { border-left: 1px solid rgba(255,142,66,0.2); border-right: 1px solid rgba(255,142,66,0.2); }
       .hero { height: 220px; }
       .item-img { width: 100px; height: 100px; min-width: 100px; }
       .item-name { font-size: 15px; } .item-desc { font-size: 12px; } .item-price { font-size: 14px; }
