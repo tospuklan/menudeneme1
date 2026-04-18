@@ -45,8 +45,8 @@
     }
     .app-header {
       width: 100%; max-width: var(--content-max); min-width: var(--content-min);
-      display: flex; align-items: flex-end; justify-content: space-between;
-      padding: 0 16px 10px; height: 68px;
+      display: flex; align-items: stretch; justify-content: space-between;
+      padding: 0 16px; height: 68px;
     }
     .lang-toggle {
       display: flex; align-items: center; gap: 6px;
@@ -164,7 +164,7 @@
 <div class="full-width-header" id="main-header" style="display:none;">
   <div class="app-header">
     <img src="logotype_2.png" alt="Urban Bites" style="height:24px;width:auto;" />
-    <button class="lang-toggle" onclick="toggleLang()">
+    <button class="lang-toggle" onclick="toggleLang()" style="align-self: flex-end; margin-bottom: 10px;">
       <span id="lang-flag">🇬🇧</span>
       <span id="lang-label">EN</span>
     </button>
