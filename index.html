@@ -45,8 +45,8 @@
     }
     .app-header {
       width: 100%; max-width: var(--content-max); min-width: var(--content-min);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 16px; height: 56px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 0 16px 10px; height: 68px;
     }
     .lang-toggle {
       display: flex; align-items: center; gap: 6px;
@@ -62,7 +62,7 @@
       width: 100%; max-width: var(--content-max); min-width: var(--content-min);
       margin: 0 auto; background: #1a1a1a;
       min-height: calc(100vh - 56px);
-      padding-bottom: 100px; display: none; margin-top: 56px;
+      padding-bottom: 100px; display: none; margin-top: 68px;
     }
     .menu-wrapper.visible { display: block; }
 
@@ -72,7 +72,7 @@
 
     /* ── TABS ── */
     .full-width-tabs {
-      position: sticky; top: 56px; z-index: 10;
+      position: sticky; top: 68px; z-index: 10;
       display: flex; justify-content: center;
       background: #1a1a1a; border-bottom: 2px solid #333;
     }
